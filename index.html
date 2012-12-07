@@ -31,7 +31,7 @@
 
 <p>This website will be my attempt to track our progress throughout the process of building and designing a BIOS system for the Raspberry Pi. Our team consists of three members, Josh Nelson, Dan Case, and myself. This is a student project at PLU for our capstone class. Our faculty mentor is Dr. Kakar. Our project website can be found at <a href="http://biosproject.github.com/biosRepo/">biosproject.github.com/biosRepo/</a>.</p>
 
-<h2>Our Plan</h2>
+<h2>Our Plan (ORIGINALLY)</h2>
 
 <p>Our plan is to design and implement a Basic Input Output System (BIOS) tailor-made for the Raspberry Pi. The Raspberry Pi uses an ARM processor, so we are still working on if our plan can be implemented as is. If not, we may have to switch to another small system. We are still in the preliminary stages of our research and conceivably will not know for certain if it can be done until we attempt it. For now, we are gung-ho and are excited to try something new and different!</p>
 
@@ -39,7 +39,7 @@
 
 <p>The potential benefits of this project are many. The first of which is that is is different from the typical project at PLU. Many projects are solely based in high-level coding and design, whereas our project aims to reach through to the lowest levels of abstraction. This experience with low-level coding is a major advantage in the workplace, because it helps us understand and interpret what goes on at a higher level. This understanding gives us an edge when running into problems of design or implementation. We will better understand how software and hardware communicate, potentially revealing previously unseen ways to better our code.</p>
 
-<h2>Timeline</h2>
+<h2>Timeline (ORIGINALLY)</h2>
 
 <p>Our time line is obviously tentative, as is the hallmark of software development. However, we plan on meeting the following dates with these goals in mind:</p>
 
@@ -54,6 +54,16 @@
 <li>April:     Complete development and testing of our BIOS</li>
 <li>May:       Present our project</li>
 </ul><hr><h1>Blog</h1>
+
+<h2>12/7/2012</h2>
+
+<p>I missed last week's post due to a swim meet. Sorry about that. Anyway, I have a lot to fill in. First, the scope of our project has changed drastically as of two weeks ago. We found out that much of the init code on the Pi is proprietary, so we can't touch it. What happens is this: when the power is turned on, the Broadcom chip's on-board ROM outputs the memory address of two files on the SD. The first file is the bare-metal init code. This is stuff we didn't want to mess with anyway. The other file is called "start.elf". This file performs the POST and hardware initialization. It in turn points to three files: commandline.txt, config.txt, and kernel.img. The commandline.txt file is at this point somewhat of a mystery, but we assume it is basic code to show what is output to the terminal screen while the hardware is initializing. Kernel.img is the compressed kernel image that loads the linux kernel and booloader so the Pi can make it to the OS. What we are interested in now is that config.txt file. Config.txt holds all the configurations for the hardware, and is essentially what we want to be able to edit.</p>
+
+<p>Our plan now is to send an interrupt call during the boot process, possibly by making a call to our own code in the config.txt file, and executing a GUI that allows users to edit some of the system settings in the config file. In essence, we are stopping the boot process before the bootloader has a chance to kick in, and adding BIOS functionality to the existing RPi EFI boot process. I don't believe we have informed John Schock about this yet, but my goal is to get either Dan or Josh or both to also open up dialogue with John. We all have different questions about our different areas of research, and I believe it would be more beneficial if they relayed that information to him directly, rather than explaining it to me first.</p>
+
+<p>Other than my above attempts at getting my partners to speak to John, I have no complaints. Both are very hard-working and as a trio we tend to be very good about informing each other of what's going on if one of us missed something. Personally, I feel that we are working well on this project and am glad that our scope could be narrowed. It would have taken an incredible amount of work to just get the hardware initialized, and that wasn't even a major part of our project! Now that we have less to worry about, we can buckle down, focus on what needs to be done, and do it.</p>
+
+<p>Our Pi should be coming any day now, and then we will finally be able to tinker with it and start prototyping. What I really want to nail down first is the interrupt call. I feel like we need to know how those work, how to implement them, and when we will be able to do so in the boot process. Another concern is how we will get the GUI running. We are not sure which C libraries will be available to us when the program is compiled (using a toolchain and cross-compiler), which means we don't quite know how hard it will be to set all of that up. After that, I/O will be the next task. To create and edit files at such a low level may prove to be very difficult. I suppose we will just have to wait and see. In the meantime, more research, more books!</p>
 
 <h2>11/23/2012</h2>
 
